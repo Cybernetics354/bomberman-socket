@@ -1,0 +1,15 @@
+canvas {
+  position: absolute;
+}
+
+#game {
+  overflow: hidden;
+}
+
+#background-canvas {
+  z-index: 0;
+}
+
+#player-canvas {
+  z-index: 1;
+}

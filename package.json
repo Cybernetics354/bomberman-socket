@@ -1,0 +1,21 @@
+{
+  "name": "bomberman",
+  "module": "index.ts",
+  "type": "module",
+  "scripts": {
+    "dev": "bun --watch index.ts",
+    "start": "bun index.ts"
+  },
+  "devDependencies": {
+    "@types/bun": "latest",
+    "@types/uuid": "^10.0.0"
+  },
+  "peerDependencies": {
+    "typescript": "^5.0.0"
+  },
+  "dependencies": {
+    "immer": "^10.1.1",
+    "rxjs": "^7.8.1",
+    "uuid": "^10.0.0"
+  }
+}

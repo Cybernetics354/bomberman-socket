@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Bomberman Websocket</title>
+    <link href="./style.css" rel="stylesheet" />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+      $(document).ready(() => {
+        // configurations
+        const PIXEL_SIZE = 20;
+
+        const ws = new WebSocket("ws://localhost:3333");
+        // example of game state
+        <!-- { -->
+        <!--   "map": { -->
+        <!--     "id": "1", -->
+        <!--     "name": "Map 1", -->
+        <!--     "width": 60, -->
+        <!--     "height": 60 -->
+        <!--   }, -->
+        <!--   "players": [ -->
+        <!--     { -->
+        <!--       "id": "194c7574-14a0-4873-bdb7-1f27802e01d2", -->
+        <!--       "name": "Player 1", -->
+        <!--       "sprite_type": 0, -->
+        <!--       "facing": 2, -->
+        <!--       "level": 1, -->
+        <!--       "state": 0, -->
+        <!--       "kill_count": 0 -->
+        <!--     } -->
+        <!--   ], -->
+        <!--   "player_positions": [ -->
+        <!--     { -->
+        <!--       "id": "194c7574-14a0-4873-bdb7-1f27802e01d2", -->
+        <!--       "x": 0, -->
+        <!--       "y": 0 -->
+        <!--     } -->
+        <!--   ], -->
+        <!--   "bombs": [], -->
+        <!--   "bomb_positions": [], -->
+        <!--   "objects": [], -->
+        <!--   "object_positions": [], -->
+        <!--   "explosions": [], -->
+        <!--   "explosion_positions": [] -->
+        <!-- } -->
+        let game_state = null;
+        let my_id = null;
+
+        function set_canvas_size(canvas) {
+          const width = scale_with_pixel(game_state.map.width + 1);
+          const height = scale_with_pixel(game_state.map.height + 1);
+
+          canvas.width = width;
+          canvas.height = height;
+
+          return { width, height };
+        }
+
+        function scale_with_pixel(value) {
+          return value * PIXEL_SIZE;
+        }
+
+        function render_background() {
+          const canvas = document.getElementById("background-canvas");
+          const { width, height } = set_canvas_size(canvas);
+
+          const ctx = canvas.getContext("2d");
+
+          // clear the canvas
+          ctx.clearRect(0, 0, width, height);
+
+          // draw the map
+          ctx.fillStyle = "black";
+          ctx.fillRect(0, 0, width, height);
+        }
+
+        function render_players() {
+          const canvas = document.getElementById("player-canvas");
+          const { width, height } = set_canvas_size(canvas);
+
+          const ctx = canvas.getContext("2d");
+
+          // clear the canvas
+          ctx.clearRect(0, 0, width, height);
+
+          // draw the players
+          game_state.players.forEach((player) => {
+            const position = game_state.player_positions.find(
+              (position) => position.id === player.id,
+            );
+
+            ctx.fillStyle = "white";
+            ctx.fillRect(
+              scale_with_pixel(position.x),
+              scale_with_pixel(position.y),
+              PIXEL_SIZE,
+              PIXEL_SIZE,
+            );
+          });
+        }
+
+        ws.onopen = () => {
+          // listen to keyboard input
+          document.addEventListener("keydown", (event) => {
+            ws.send(event.keyCode);
+          });
+
+          // listen to messages from the server
+          ws.onmessage = (event) => {
+            const data = JSON.parse(event.data);
+            if (data.your_id) {
+              my_id = data.your_id;
+              game_state = data.state;
+              render_background();
+            }
+
+            if (data.type) {
+              game_state[data.type] = data.data;
+            }
+
+            render_players();
+          };
+        };
+      });
+    </script>
+  </head>
+  <body>
+    <div id="game">
+      <canvas id="background-canvas"></canvas>
+      <canvas id="player-canvas"></canvas>
+    </div>
+  </body>
+</html>
