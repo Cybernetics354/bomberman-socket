@@ -1,7 +1,7 @@
 import type { ServerWebSocket } from "bun";
 import type { Observable } from "rxjs";
-import type { Coordinate } from "./geo";
-import type { IEventBase } from "./event";
+import type { Coordinate } from "../model/geo";
+import type { IEventBase } from "../model/event";
 import type {
   WorldObjectID,
   WorldObjectInitProps,
@@ -9,17 +9,10 @@ import type {
   WorldObjectTakeoutProps,
 } from "./world.object";
 
-import {
-  BehaviorSubject,
-  distinctUntilChanged,
-  interval,
-  Subject,
-  take,
-  throttle,
-} from "rxjs";
+import { BehaviorSubject, distinctUntilChanged, Subject, throttle } from "rxjs";
 
 import { Keycode, ZKeycode } from "@model/control";
-import { EventType } from "./event";
+import { EventType } from "../model/event";
 import WorldObject, { WorldObjectLayer } from "./world.object";
 
 /**
@@ -192,7 +185,7 @@ export default class Player extends WorldObject<typeof PLAYER_KIND> {
           // interval(100);
           return this._clock!.interval(100);
           // return this._clock!.tick$;
-        })
+        }),
       )
       .subscribe((keycode) => {
         console.log("player keycode:", keycode);
@@ -345,7 +338,7 @@ export default class Player extends WorldObject<typeof PLAYER_KIND> {
 
   private bombExploded(
     isOwner: boolean,
-    affectedObjectIDs: Array<WorldObjectID>
+    affectedObjectIDs: Array<WorldObjectID>,
   ): void {
     // if the player is the owner of the bomb, then increment the kill count.
     if (isOwner) {

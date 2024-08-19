@@ -1,11 +1,11 @@
-import type { DisposableEventMap } from "./disposable";
+import type { DisposableEventMap } from "../model/disposable";
 import type { PlayerFacing } from "./object.player";
 import type Player from "./object.player";
 import type World from "./world";
 
 import { EventEmitter } from "events";
 
-import Server from "../app/server";
+import Server from "./server";
 
 interface GameStateEventMap extends DisposableEventMap {}
 
@@ -81,10 +81,10 @@ export default class GameState
 
     player.on("disposed", () => {
       this._players = this._players.filter(
-        (currentPlayer) => currentPlayer.id !== player.id
+        (currentPlayer) => currentPlayer.id !== player.id,
       );
       this._playerPositions = this._playerPositions.filter(
-        (playerPosition) => playerPosition.id !== player.id
+        (playerPosition) => playerPosition.id !== player.id,
       );
       this.publishPlayers();
       this.publishPlayerPositions();
@@ -95,7 +95,7 @@ export default class GameState
       JSON.stringify({
         your_id: player.id,
         state: this.state,
-      })
+      }),
     );
 
     const playerStateSubscription = player.state$.subscribe((state) => {
@@ -115,7 +115,7 @@ export default class GameState
     const playerPositionSubscription = player.position$.subscribe(
       (position) => {
         const playerPosition = this._playerPositions.find(
-          (playerPosition) => playerPosition.id === player.id
+          (playerPosition) => playerPosition.id === player.id,
         );
         if (!playerPosition) return;
 
@@ -124,7 +124,7 @@ export default class GameState
         playerPosition.y = position.y;
 
         this.publishPlayerPositions();
-      }
+      },
     );
 
     this.on("disposed", () => {
@@ -140,7 +140,7 @@ export default class GameState
       JSON.stringify({
         type: "players",
         data: this._players,
-      })
+      }),
     );
   }
 
@@ -150,7 +150,7 @@ export default class GameState
       JSON.stringify({
         type: "player_positions",
         data: this._playerPositions,
-      })
+      }),
     );
   }
 

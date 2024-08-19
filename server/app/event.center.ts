@@ -1,12 +1,12 @@
 import type { Observable } from "rxjs";
-import type { DisposableEventMap } from "./disposable";
-import type { IEvent } from "./event";
+import type { DisposableEventMap } from "../model/disposable";
+import type { IEvent } from "../model/event";
 import type { WorldObjectID } from "./world.object";
 
 import { EventEmitter } from "events";
 import { Subject } from "rxjs";
 
-import { EventType } from "./event";
+import { EventType } from "../model/event";
 
 interface EventCenterEventMap extends DisposableEventMap {}
 
@@ -78,7 +78,7 @@ export default class EventCenter
   public bombExploded(
     bombID: WorldObjectID,
     ownerPlayerID: WorldObjectID,
-    affectedObjectIDs: Array<WorldObjectID>
+    affectedObjectIDs: Array<WorldObjectID>,
   ): void {
     this._eventSubject.next({
       type: EventType.BOMB_EXPLODED,

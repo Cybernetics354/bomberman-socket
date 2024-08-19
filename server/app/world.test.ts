@@ -1,4 +1,4 @@
-import type { Coordinate } from "./geo";
+import type { Coordinate } from "../model/geo";
 
 import { test, describe, expect } from "bun:test";
 
@@ -87,7 +87,7 @@ describe("World.lookupByLayer()", () => {
     const result = world.lookupByLayer(
       brick.layer,
       { x: 0, y: 0 },
-      { x: 1, y: 1 }
+      { x: 1, y: 1 },
     );
     expect(result.length).toEqual(2);
     expect(result[0]).toEqual(brick.id);
@@ -149,7 +149,7 @@ describe("World.moveObject()", () => {
 
     const [lookupResult2] = world.lookupByLayer(
       brick.layer,
-      destinationPosition
+      destinationPosition,
     );
     expect(lookupResult2).toEqual(brick.id);
   });
@@ -161,7 +161,7 @@ describe("World.moveObject()", () => {
 
     const [lookupResult] = world.lookupByLayer(
       WorldObjectLayer.GROUND,
-      position
+      position,
     );
     expect(lookupResult).toEqual(null);
   });

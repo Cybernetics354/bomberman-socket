@@ -27,7 +27,7 @@ enum RouteMethod {
  * The handler's parameter of the route.
  */
 export interface IRouteHandlerParameter<
-  TParameter extends Record<string, unknown> = {}
+  TParameter extends Record<string, unknown> = {},
 > {
   /** The server of the route. */
   server: Bun.Server;
@@ -43,7 +43,7 @@ export interface IRouteHandlerParameter<
       headers?: globalThis.Bun.HeadersInit;
       /** The data to be an context during the upgrade. */
       context: IWebSocketContext;
-    }
+    },
   ) => boolean;
   /** The parameter of the route. */
   parameter: TParameter;
@@ -79,7 +79,7 @@ type IRouteWebSocketEvent =
  * The handler's parameter of the web socket.
  */
 export type IRouteWebSocketParameter<
-  TContext extends IWebSocketContext = IWebSocketContext
+  TContext extends IWebSocketContext = IWebSocketContext,
 > = IRouteWebSocketEvent & {
   /** The websocket of the socket. */
   ws: Bun.ServerWebSocket<TContext>;
@@ -89,7 +89,7 @@ export type IRouteWebSocketParameter<
  * The handler of the websocket.
  */
 interface IRouteWebSocketContext<
-  TContext extends IWebSocketContext = IWebSocketContext
+  TContext extends IWebSocketContext = IWebSocketContext,
 > {
   /** The type of the route. */
   type: "websocket";
@@ -142,7 +142,7 @@ export default class Server {
         const route = findRoute(
           Server._router,
           request.method,
-          new URL(request.url).pathname
+          new URL(request.url).pathname,
         );
         if (!route || !route.data || route.data.type !== "fetch") {
           return new Response("Not Found", { status: 404 });
@@ -164,7 +164,7 @@ export default class Server {
           const route = findRoute(
             Server._router,
             RouteMethod.WEBSOCKET,
-            ws.data.type
+            ws.data.type,
           );
           if (!route || !route.data || route.data.type !== "websocket") {
             return;
@@ -176,7 +176,7 @@ export default class Server {
           const route = findRoute(
             Server._router,
             RouteMethod.WEBSOCKET,
-            ws.data.type
+            ws.data.type,
           );
           if (!route || !route.data || route.data.type !== "websocket") {
             return;
@@ -188,7 +188,7 @@ export default class Server {
           const route = findRoute(
             Server._router,
             RouteMethod.WEBSOCKET,
-            ws.data.type
+            ws.data.type,
           );
           if (!route || !route.data || route.data.type !== "websocket") {
             return;
@@ -219,7 +219,7 @@ export default class Server {
    */
   public static GET<TParameter extends Record<string, unknown>>(
     path: string,
-    handler: IRouteContext<TParameter>["handler"]
+    handler: IRouteContext<TParameter>["handler"],
   ) {
     addRoute(this._router, RouteMethod.GET, path, {
       type: "fetch",
@@ -234,7 +234,7 @@ export default class Server {
    */
   public static POST<TParameter extends Record<string, unknown>>(
     path: string,
-    handler: IRouteContext<TParameter>["handler"]
+    handler: IRouteContext<TParameter>["handler"],
   ) {
     addRoute(this._router, RouteMethod.POST, path, {
       type: "fetch",
@@ -249,7 +249,7 @@ export default class Server {
    */
   public static PUT<TParameter extends Record<string, unknown>>(
     path: string,
-    handler: IRouteContext<TParameter>["handler"]
+    handler: IRouteContext<TParameter>["handler"],
   ) {
     addRoute(this._router, RouteMethod.PUT, path, {
       type: "fetch",
@@ -264,7 +264,7 @@ export default class Server {
    */
   public static DELETE<TParameter extends Record<string, unknown> = {}>(
     path: string,
-    handler: IRouteContext<TParameter>["handler"]
+    handler: IRouteContext<TParameter>["handler"],
   ) {
     addRoute(this._router, RouteMethod.DELETE, path, {
       type: "fetch",
@@ -278,10 +278,10 @@ export default class Server {
    * @param handler The handler of the socket.
    */
   public static WEBSOCKET<
-    TContext extends IWebSocketContext = IWebSocketContext
+    TContext extends IWebSocketContext = IWebSocketContext,
   >(
     type: TContext["type"],
-    handler: IRouteWebSocketContext<TContext>["handler"]
+    handler: IRouteWebSocketContext<TContext>["handler"],
   ) {
     addRoute(this._router, RouteMethod.WEBSOCKET, type, {
       type: "websocket",

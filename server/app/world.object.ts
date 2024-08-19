@@ -1,6 +1,6 @@
 import type { Observable } from "rxjs";
-import type { Coordinate, Size } from "./geo";
-import type { DisposableEventMap } from "./disposable";
+import type { Coordinate, Size } from "../model/geo";
+import type { DisposableEventMap } from "../model/disposable";
 import type GameSession from "./game.session";
 import type World from "./world";
 import type Clock from "./clock";
@@ -66,7 +66,7 @@ export interface WorldObjectEventMap extends DisposableEventMap {
  */
 export default abstract class WorldObject<
     TKind extends string = string,
-    TInitProps extends WorldObjectInitProps = WorldObjectInitProps
+    TInitProps extends WorldObjectInitProps = WorldObjectInitProps,
   >
   extends EventEmitter<WorldObjectEventMap>
   implements Disposable
@@ -123,7 +123,7 @@ export default abstract class WorldObject<
     name: TKind,
     layer: WorldObjectLayer,
     position?: Coordinate,
-    size?: Size
+    size?: Size,
   ) {
     super();
 
@@ -132,12 +132,12 @@ export default abstract class WorldObject<
     this.layer = layer;
 
     this._positionSubject = new BehaviorSubject<Coordinate>(
-      position || { x: 0, y: 0 }
+      position || { x: 0, y: 0 },
     );
     this.position$ = this._positionSubject.pipe(distinctUntilChanged());
 
     this._sizeSubject = new BehaviorSubject<Size>(
-      size || { width: 1, height: 1 }
+      size || { width: 1, height: 1 },
     );
     this.size$ = this._sizeSubject.pipe(distinctUntilChanged());
 

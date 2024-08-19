@@ -1,5 +1,5 @@
-import { Glob } from "bun";
 import Path from "path";
+import { Glob } from "bun";
 
 import Server from "../app/server";
 

@@ -1,14 +1,14 @@
 import type { Coordinate, Size } from "./geo";
-import type Clock from "./clock";
-import type EventCenter from "./event.center";
-import type { WorldObjectID, WorldObjectLayer } from "./world.object";
-import type WorldObject from "./world.object";
-import type GameSession from "./game.session";
+import type Clock from "../app/clock";
+import type EventCenter from "../app/event.center";
+import type { WorldObjectID, WorldObjectLayer } from "../app/world.object";
+import type WorldObject from "../app/world.object";
+import type GameSession from "../app/game.session";
 import type { DisposableEventMap } from "./disposable";
 
 import { EventEmitter } from "events";
 
-import { WorldObjectLayerCount } from "./world.object";
+import { WorldObjectLayerCount } from "../app/world.object";
 
 /**
  * Properties of a world.
@@ -174,7 +174,7 @@ export default class World
    */
   public placeObject(
     objectID: WorldObjectID,
-    position?: Coordinate
+    position?: Coordinate,
   ): Coordinate | undefined {
     if (!this._isInitialized) {
       throw new Error("World is not initialized");
@@ -263,7 +263,7 @@ export default class World
    */
   public moveObject(
     objectID: WorldObjectID,
-    newPosition: Coordinate
+    newPosition: Coordinate,
   ): Coordinate | undefined {
     if (!this._isInitialized) return;
 
@@ -445,7 +445,7 @@ export default class World
   private setMapCell(
     position: Coordinate,
     layer: WorldObjectLayer,
-    id: WorldObjectID | null
+    id: WorldObjectID | null,
   ): void {
     if (
       position.x < 0 ||
@@ -488,7 +488,7 @@ export default class World
     if (intersectedObjectIDs.length > 0) {
       this.gameSession?.eventCenter.objectIntersect(
         id,
-        ...intersectedObjectIDs
+        ...intersectedObjectIDs,
       );
     }
   }

@@ -1,7 +1,7 @@
-import type { Coordinate, Region } from "./geo";
+import type { Coordinate, Region } from "../model/geo";
 import type { WorldObjectID, WorldObjectPlacedProps } from "./world.object";
 
-import { EventType } from "./event";
+import { EventType } from "../model/event";
 import WorldObject, { WorldObjectLayer } from "./world.object";
 
 /**

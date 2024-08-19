@@ -1,13 +1,17 @@
-import type { WorldObjectID } from "./world.object";
+import type { WorldObjectID } from "../app/world.object";
 
 /**
  * The event type.
  */
 export enum EventType {
+  /** The player event. */
   PLAYER = "player",
 
+  /** The intersect event. */
   INTERSECT = "intersect",
+  /** The bomb placed event. */
   BOMB_PLACED = "bomb_placed",
+  /** The bomb exploded event. */
   BOMB_EXPLODED = "bomb_exploded",
 }
 
@@ -23,6 +27,7 @@ export interface IEventBase<T extends EventType = EventType> {
  * The payload of the event.
  */
 export interface IEventPayloadMap {
+  /** The payload of the event for the player event. */
   [EventType.PLAYER]: {
     /** The ID of the player. */
     playerID: WorldObjectID;
@@ -41,14 +46,17 @@ export interface IEventPayloadMap {
       | undefined;
   };
 
+  /** The payload of the event for the intersect event. */
   [EventType.INTERSECT]: {
     initiatorObjectID: WorldObjectID;
     objectIDs: Array<WorldObjectID>;
   };
+  /** The payload of the event for the bomb placed event. */
   [EventType.BOMB_PLACED]: {
     bombID: WorldObjectID;
     ownerPlayerID: WorldObjectID;
   };
+  /** The payload of the event for the bomb exploded event. */
   [EventType.BOMB_EXPLODED]: {
     bombID: WorldObjectID;
     ownerPlayerID: WorldObjectID;

@@ -1,5 +1,5 @@
 import type { SchedulerLike } from "rxjs";
-import type { DisposableEventMap } from "./disposable";
+import type { DisposableEventMap } from "../model/disposable";
 
 import { EventEmitter } from "events";
 import { asyncScheduler, Observable } from "rxjs";

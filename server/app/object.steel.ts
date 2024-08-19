@@ -1,4 +1,4 @@
-import type { Coordinate, Region } from "./geo";
+import type { Coordinate, Region } from "../model/geo";
 import type { WorldObjectPlacedProps } from "./world.object";
 
 import WorldObject, { WorldObjectLayer } from "./world.object";

@@ -1,4 +1,4 @@
-import type { DisposableEventMap } from "./disposable";
+import type { DisposableEventMap } from "../model/disposable";
 import type { WorldObjectID } from "./world.object";
 
 import { EventEmitter } from "events";

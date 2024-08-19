@@ -1,4 +1,4 @@
-import type Player from "./object.player";
+import type Player from "../app/object.player";
 
 /**
  * The type of the websocket.
@@ -15,7 +15,11 @@ export interface IWebSocketContextBase<TType extends ServerWebSocketType> {
   payload: IWebSocketContextPayloadMap[TType];
 }
 
+/**
+ * The payload of the websocket.
+ */
 interface IWebSocketContextPayloadMap {
+  /** The payload of the websocket for the game socket. */
   [ServerWebSocketType.Game]: {
     /** The session ID of the socket. */
     sessionID: string;

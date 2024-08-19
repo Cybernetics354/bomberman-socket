@@ -1,4 +1,4 @@
-import type { Region } from "./geo";
+import type { Region } from "../model/geo";
 import type WorldObject from "./world.object";
 
 import Brick from "./object.brick";
@@ -50,7 +50,7 @@ export default class WorldStore {
       for (const region of object.regions) {
         const [x, y, width, height] = region;
         worldObjects.push(
-          ...constructor({ x, y, width: width ?? 1, height: height ?? 1 })
+          ...constructor({ x, y, width: width ?? 1, height: height ?? 1 }),
         );
       }
     });

@@ -6,8 +6,8 @@ import type { IWebSocketContextBase } from "../model/websocket";
 
 import { ServerWebSocketType } from "../model/websocket";
 import Server from "../app/server";
-import GameSession from "../model/game.session";
-import World from "../model/world";
+import GameSession from "../app/game.session";
+import World from "../app/world";
 
 export default class GameController {
   private static _instace: GameController;
@@ -16,12 +16,12 @@ export default class GameController {
   private constructor() {
     Server.GET<{ id: string }>(
       "/api/games/:id",
-      this.joinGameSessionHandler.bind(this)
+      this.joinGameSessionHandler.bind(this),
     );
 
     Server.WEBSOCKET(
       ServerWebSocketType.Game,
-      this.gameSessionHandler.bind(this)
+      this.gameSessionHandler.bind(this),
     );
   }
 
