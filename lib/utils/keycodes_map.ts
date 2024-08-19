@@ -20,7 +20,7 @@ const MOVEMENT_KEYCODES = [
   KeycodesMap.keydown,
   KeycodesMap.keyleft,
   KeycodesMap.keyright,
-];
+] as const;
 
 type IMovementKeycodes = (typeof MOVEMENT_KEYCODES)[number];
 

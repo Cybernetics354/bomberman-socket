@@ -153,8 +153,8 @@ class SessionController {
 
     if (_playerIndex < 0) return;
 
-    if (MOVEMENT_KEYCODES.includes(action)) {
-      this.movePlayer(playerID, action);
+    if (MOVEMENT_KEYCODES.includes(action as IMovementKeycodes)) {
+      this.movePlayer(playerID, action as IMovementKeycodes);
     }
   };
 
