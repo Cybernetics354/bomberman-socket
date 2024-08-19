@@ -1,6 +1,7 @@
+import type { IWebSocketContext } from "../model/websocket";
+
 import Bun from "bun";
 import { addRoute, createRouter, findRoute } from "rou3";
-import type { IWebSocketContext } from "../model/websocket";
 
 /**
  * The default port of the server.

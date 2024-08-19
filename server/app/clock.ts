@@ -4,6 +4,9 @@ import type { DisposableEventMap } from "../model/disposable";
 import { EventEmitter } from "events";
 import { asyncScheduler, Observable } from "rxjs";
 
+/**
+ * The event map of the clock.
+ */
 interface ClockEventMap extends DisposableEventMap {}
 
 /**

@@ -3,8 +3,8 @@ import type { Coordinate } from "../model/geo";
 import { test, describe, expect } from "bun:test";
 
 import World, { ErrorOverlappingObject } from "./world";
-import Brick from "./object.brick";
 import { WorldObjectLayer } from "./world.object";
+import Brick from "./object.brick";
 
 describe("World.placeObject()", () => {
   const world = new World({

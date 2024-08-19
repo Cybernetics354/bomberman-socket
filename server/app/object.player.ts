@@ -6,7 +6,6 @@ import type {
   WorldObjectID,
   WorldObjectInitProps,
   WorldObjectPlacedProps,
-  WorldObjectTakeoutProps,
 } from "./world.object";
 
 import { BehaviorSubject, distinctUntilChanged, Subject, throttle } from "rxjs";
@@ -151,7 +150,7 @@ export default class Player extends WorldObject<typeof PLAYER_KIND> {
   }
 
   public feed(payload: string): boolean {
-    // ignore feed if the player is not in a world.
+    // ignore feed if the player is not in a world yet.
     if (!this._world) return false;
 
     const keycodeResult = ZKeycode.safeParse(payload);
@@ -179,14 +178,7 @@ export default class Player extends WorldObject<typeof PLAYER_KIND> {
     });
 
     const keycodeSubscription = this._keycodeSubject
-      .pipe(
-        throttle(() => {
-          console.log("player throttle");
-          // interval(100);
-          return this._clock!.interval(100);
-          // return this._clock!.tick$;
-        }),
-      )
+      .pipe(throttle(() => this._clock!.interval(100)))
       .subscribe((keycode) => {
         console.log("player keycode:", keycode);
         switch (keycode) {
@@ -215,10 +207,6 @@ export default class Player extends WorldObject<typeof PLAYER_KIND> {
       eventSubscription?.unsubscribe();
       keycodeSubscription?.unsubscribe();
     });
-  }
-
-  public takeout(props: WorldObjectTakeoutProps): void {
-    super.takeout(props);
   }
 
   private initClient(client: ServerWebSocket<any>): void {

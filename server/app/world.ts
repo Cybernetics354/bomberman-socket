@@ -1,10 +1,10 @@
-import type { Coordinate, Size } from "./geo";
+import type { Coordinate, Size } from "../model/geo";
 import type Clock from "../app/clock";
 import type EventCenter from "../app/event.center";
 import type { WorldObjectID, WorldObjectLayer } from "../app/world.object";
 import type WorldObject from "../app/world.object";
 import type GameSession from "../app/game.session";
-import type { DisposableEventMap } from "./disposable";
+import type { DisposableEventMap } from "../model/disposable";
 
 import { EventEmitter } from "events";
 
